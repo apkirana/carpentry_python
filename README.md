@@ -1,3 +1,4 @@
 # carpentry_python
 
 Course about software carpentry Utwente
+May 2026
