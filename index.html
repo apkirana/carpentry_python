@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UT Python Carpentries Training</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      color: #2d3748;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
+      color: white;
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 0.25rem 1rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.05rem;
+      opacity: 0.85;
+      margin-bottom: 0.25rem;
+    }
+
+    header .meta {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* About */
+    .about {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+
+    .about h2 { font-size: 1.1rem; color: #2b6cb0; margin-bottom: 0.75rem; }
+    .about p  { color: #4a5568; }
+
+    /* Days grid */
+    .days {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .day-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .day-card-header {
+      padding: 1.25rem 1.5rem 1rem;
+      background: #ebf4ff;
+      border-bottom: 1px solid #bee3f8;
+    }
+
+    .day-card-header .day-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #2b6cb0;
+    }
+
+    .day-card-header h3 {
+      font-size: 1.05rem;
+      margin-top: 0.2rem;
+      color: #1a365d;
+    }
+
+    .day-card-body {
+      padding: 1.25rem 1.5rem;
+      flex: 1;
+    }
+
+    .day-card-body ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .day-card-body ul li {
+      padding: 0.3rem 0;
+      color: #4a5568;
+      font-size: 0.92rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .day-card-body ul li::before {
+      content: "›";
+      color: #2b6cb0;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .day-card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .day-card-footer a {
+      display: inline-block;
+      background: #2b6cb0;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      padding: 0.45rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+
+    .day-card-footer a:hover { background: #2c5282; }
+
+    /* Schedule */
+    .schedule {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+
+    .schedule h2 { font-size: 1.1rem; color: #2b6cb0; margin-bottom: 1.25rem; }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 560px) {
+      .schedule-grid { grid-template-columns: 1fr; }
+    }
+
+    .schedule-day h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #2b6cb0;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #bee3f8;
+    }
+
+    .schedule-item {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.3rem 0;
+      font-size: 0.88rem;
+    }
+
+    .schedule-item .time {
+      color: #718096;
+      min-width: 5.5rem;
+      flex-shrink: 0;
+    }
+
+    .schedule-item .topic { color: #2d3748; }
+
+    .break { color: #a0aec0 !important; font-style: italic; }
+
+    /* Setup */
+    .setup {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+
+    .setup h2 { font-size: 1.1rem; color: #2b6cb0; margin-bottom: 1rem; }
+
+    .setup ol { padding-left: 1.25rem; color: #4a5568; }
+    .setup ol li { margin-bottom: 0.5rem; font-size: 0.93rem; }
+
+    pre {
+      background: #1a202c;
+      color: #a0f0a0;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin: 0.75rem 0;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.82rem;
+      color: #a0aec0;
+    }
+
+    footer a { color: #2b6cb0; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Software Carpentry</div>
+  <h1>UT Python Carpentries Training</h1>
+  <p>University of Twente &mdash; LISA</p>
+  <p>Trainer: Néstor DelaPaz-Ruíz</p>
+  <div class="meta">May 2026</div>
+</header>
+
+<main>
+
+  <section class="about">
+    <h2>About this Workshop</h2>
+    <p>
+      A hands-on introduction to Python for researchers at the University of Twente.
+      Using the <a href="https://swcarpentry.github.io/python-novice-inflammation/" target="_blank" rel="noopener">Software Carpentry "Programming with Python"</a>
+      curriculum, participants analyse real clinical trial data (arthritis inflammation),
+      visualise results, and build reusable scripts — no prior programming experience required.
+    </p>
+  </section>
+
+  <div class="days">
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-label">Day 1</div>
+        <h3>Python Fundamentals &amp; Data Analysis</h3>
+      </div>
+      <div class="day-card-body">
+        <ul>
+          <li>Introduction to Python &amp; Jupyter</li>
+          <li>Analysing data with NumPy</li>
+          <li>Visualising data with Matplotlib</li>
+          <li>Lists, dictionaries &amp; data structures</li>
+          <li>Loops and iteration</li>
+          <li>Analysing multiple files</li>
+        </ul>
+      </div>
+      <div class="day-card-footer">
+        <a href="Python_Day1/">Open notebooks</a>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-label">Day 2</div>
+        <h3>Functions, Errors &amp; Command-Line</h3>
+      </div>
+      <div class="day-card-body">
+        <ul>
+          <li>Writing reusable functions</li>
+          <li>Errors, exceptions &amp; defensive programming</li>
+          <li>Debugging strategies</li>
+          <li>Modules &amp; command-line programs</li>
+          <li>Exercises &amp; practice</li>
+        </ul>
+      </div>
+      <div class="day-card-footer">
+        <a href="Python_Day2/">Open notebooks</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="schedule">
+    <h2>Daily Schedule</h2>
+    <div class="schedule-grid">
+      <div class="schedule-day">
+        <h3>Day 1</h3>
+        <div class="schedule-item"><span class="time">09:00 am</span><span class="topic">Welcome &amp; setup</span></div>
+        <div class="schedule-item"><span class="time">09:15 am</span><span class="topic">Intro &amp; data analysis</span></div>
+        <div class="schedule-item"><span class="time">10:30 am</span><span class="topic break">Break</span></div>
+        <div class="schedule-item"><span class="time">10:45 am</span><span class="topic">Visualisation &amp; loops</span></div>
+        <div class="schedule-item"><span class="time">12:00 pm</span><span class="topic break">Lunch break</span></div>
+        <div class="schedule-item"><span class="time">01:00 pm</span><span class="topic">Multiple files &amp; exercises</span></div>
+        <div class="schedule-item"><span class="time">02:30 pm</span><span class="topic break">Break</span></div>
+        <div class="schedule-item"><span class="time">04:00 pm</span><span class="topic">Wrap-up</span></div>
+      </div>
+      <div class="schedule-day">
+        <h3>Day 2</h3>
+        <div class="schedule-item"><span class="time">09:00 am</span><span class="topic">Welcome &amp; day overview</span></div>
+        <div class="schedule-item"><span class="time">09:10 am</span><span class="topic">Python Part 2</span></div>
+        <div class="schedule-item"><span class="time">10:30 am</span><span class="topic break">Break</span></div>
+        <div class="schedule-item"><span class="time">10:45 am</span><span class="topic">Errors &amp; defensive coding</span></div>
+        <div class="schedule-item"><span class="time">11:40 am</span><span class="topic break">Break</span></div>
+        <div class="schedule-item"><span class="time">12:10 pm</span><span class="topic">Debugging &amp; CLI programs</span></div>
+        <div class="schedule-item"><span class="time">12:55 pm</span><span class="topic">Wrap-up &amp; end</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="setup">
+    <h2>Quick Setup</h2>
+    <ol>
+      <li>Clone or download this repository into a folder called <code>swc-python</code> on your Desktop.</li>
+      <li>Create and activate a virtual environment:
+        <pre>python -m venv venv
+# macOS / Linux
+source venv/bin/activate
+# Windows
+venv\Scripts\activate</pre>
+      </li>
+      <li>Install dependencies:
+        <pre>pip install -r requirements.txt</pre>
+      </li>
+      <li>Launch Jupyter Lab:
+        <pre>jupyter lab</pre>
+      </li>
+    </ol>
+    <p style="margin-top:1rem; font-size:0.9rem; color:#718096;">
+      For full setup instructions see <a href="Python_Day1/README.md">Python_Day1/README.md</a>.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    Based on <a href="https://swcarpentry.github.io/python-novice-inflammation/" target="_blank" rel="noopener">Software Carpentry &mdash; Programming with Python</a>
+    &nbsp;|&nbsp;
+    University of Twente LISA &nbsp;|&nbsp; May 2026
+  </p>
+</footer>
+
+</body>
+</html>
